@@ -26,9 +26,8 @@
             //console.log("post data in factory", info);
             //friends.push({name: info.name, age: info.age});
               $http.post('/addFriend', info).success(function(data){
-                console.log("new friend", info);
+                //console.log("new friend", info);
                 callback(info);
-                //friends.push({name: info.name, age: info.age});
               })
             }
             factory.deleteFriend = function(friend, callback) {
@@ -41,7 +40,6 @@
                 callback(friends);
               })
             }
-
             return factory;
           });
 
@@ -74,8 +72,6 @@
               //console.log(friend, "deleted");
             });
           }
-
-
       });
 
       </script>
@@ -94,7 +90,7 @@
         <tr ng-repeat="friend in friends | filter: filter_name">
         <td ng-bind="friend.name"></td>
         <td ng-bind="friend.age"></td>
-        <td><input type="submit" value="delete" ng-click="deleteFriend(friend)"></td>
+        <td><button ng-click="deleteFriend(friend)">Delete</button></td>
       </tbody>
     </table>
       <h1>Add a Friend</h1>
