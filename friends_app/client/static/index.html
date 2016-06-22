@@ -84,12 +84,19 @@
       <h1>Friends</h1>
       <input type="text" ng-model="filter_name" placeholder="filter">
         {{filter_name}}
-      <div ng-repeat="friend in friends">
-        <p "filter: filter_name">{{friend.name}}, {{friend.age}}</p>
-        <input type="submit" value="delete" ng-click="deleteFriend(friend)">
-      </div>
-
-      </ul>
+    <table border=1>
+      <thead>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Action</th>
+      <thead>
+      <tbody>
+        <tr ng-repeat="friend in friends | filter: filter_name">
+        <td ng-bind="friend.name"></td>
+        <td ng-bind="friend.age"></td>
+        <td><input type="submit" value="delete" ng-click="deleteFriend(friend)"></td>
+      </tbody>
+    </table>
       <h1>Add a Friend</h1>
       <!-- objects and properties nothing scary -->
       <input type="text" ng-model="new_friend.name" placeholder="name">
