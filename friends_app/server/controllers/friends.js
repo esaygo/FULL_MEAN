@@ -1,18 +1,17 @@
-//controls all the server-side logic and is called upon by the routes
-//interacts with preloaded models
-//sends response to client
 
 var mongoose = require('mongoose');
 var Friend = mongoose.model('Friend');
-var bodyParser = require('body-parser');
+//var mongodb = require('mongodb');
+
 
 module.exports = (function(){
   return {
     //index in the factory is calling the index method(server side)
-    index: function(req, res) {
+    show: function(req, res) {
       Friend.find({}, function(err, results) {
         if(err) {
           console.log(err);
+          res.json(err);
         } else {
           res.json(results);
           console.log(results);
@@ -20,18 +19,34 @@ module.exports = (function(){
       })
     },
     create: function(req,res) {
-      console.log("to save to db", req.body);
-      var friend = new Friend({
-              name: req.body.name,
-              age: req.body.age
-            });
-      friend.save(function(err) {
+      //console.log("to save to db", req.body);
+      var new_friend = new Friend(req.body);
+      new_friend.save(function(err) {
         if(err) {
           console.log("an error occured");
+          res.json(err);
         } else {
           console.log("saved successfully to db");
+          res.json({success: true});
+          //res.redirect('/');
         }
-        res.redirect('/');
+
+      });
+    },
+
+    delete: function(req,res) {
+      console.log("record to delete", req.params.id);
+
+      Friend.remove({_id: req.params.id}, function(err){
+        if(err){
+          console.log("error deleting record");
+          res.json(err);
+        }else{
+          res.json({success: true});
+          console.log("successfully deleted");
+          //res.redirect('/');
+        }
+
       });
     }
 

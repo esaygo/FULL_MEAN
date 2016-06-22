@@ -2,13 +2,13 @@
 //it is required by mongoose.js, which is required by server.js, so no need to require this in server.js
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var path = require('path');
+// var Schema = mongoose.Schema;
+// var path = require('path');
 
 var FriendSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  //created_at: {type: Date, default: Date.now}
+  name:{type: String},
+  age: {type: Number},
+  created_at: {type: Date, default: Date.now}
 });
 
 

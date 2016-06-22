@@ -6,14 +6,18 @@
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
       <script type='text/javascript'>
 
-      var friends_app = angular.module('friends_app', []);
+      var friends_app = angular.module('friends_app', ['ngRoute', 'ngMessages']);
+
           // create the FriendFactory
           friends_app.factory('FriendFactory', function($http) {
             var factory = {};
-            //var friends = [];
+            var friends = [];
             //Restful syntax: index = get all that object
-            factory.index = function(callback) {
-              $http.get('/friends').success(function(friends) {
+            factory.getFriends = function(callback) {
+              //console.log("http get friends called");
+              $http.get('/friends').success(function(output) {
+                friends = output;
+                console.log("friends: " + friends);
                 callback(friends);
               })
             }
@@ -21,43 +25,70 @@
             factory.create = function(info, callback) {
             //console.log("post data in factory", info);
             //friends.push({name: info.name, age: info.age});
-            callback(info);
-              $http.post('/friends', info)
+              $http.post('/addFriend', info).success(function(data){
                 console.log("new friend", info);
+                callback(info);
+                //friends.push({name: info.name, age: info.age});
+              })
             }
-            
+            factory.deleteFriend = function(friend, callback) {
+              console.log("http post delete friend");
+              //console.log("delete", friend);
+              $http.delete('deleteFriend/' + friend._id).success(function(){
+                friends.splice(friends.indexOf(friend), 1);
+                console.log("friend", friend);
+                //factory.getFriends(callback);
+                callback(friends);
+              })
+            }
+
             return factory;
           });
-          // Now let's create a controller with some hardcoded data!
+
           friends_app.controller('FriendsController', function($scope, FriendFactory) {
-            //$scope.friends = FriendFactory.index();
-            FriendFactory.index(function(data){
+
+            FriendFactory.getFriends(function(data){
               //console.log("data", data);
               $scope.friends = data;
             });
 
           $scope.addfriend = function() {
-            //use of callbacks
-            FriendFactory.create($scope.new_friend, function(post_data) {
+            console.log("add friend");
+            FriendFactory.create($scope.new_friend, function(info) {
                 //console.log("scppe friend", $scope.friends);
                 //console.log("data from factory", post_data);
-                $scope.friends.push(post_data);
+                $scope.friends.push(info);
 
                 $scope.new_friend = {};
               });
             }
+          $scope.deleteFriend = function(friend) {
+            //console.log("delete friend called");
+            //console.log("friendObj=", friend);
+            FriendFactory.deleteFriend(friend, function(){
+              FriendFactory.getFriends(function(data){
+                console.log("get friends called");
+                $scope.friends = data;
+                //console.log($scope.friends);
+              });
+              //console.log(friend, "deleted");
+            });
+          }
+
+
       });
+
       </script>
 </head>
   <body ng-controller="FriendsController">
       <h1>Friends</h1>
       <input type="text" ng-model="filter_name" placeholder="filter">
         {{filter_name}}
-      <ul>
-        <!-- here is where we are going to display friends -->
-        <li ng-repeat="friend in friends | filter: filter_name">
-          {{friend.name}}, {{friend.age}}
-      </li>
+      <div ng-repeat="friend in friends">
+        <p "filter: filter_name">{{friend.name}}, {{friend.age}}</p>
+        <input type="submit" value="delete" ng-click="deleteFriend(friend)">
+      </div>
+
       </ul>
       <h1>Add a Friend</h1>
       <!-- objects and properties nothing scary -->
