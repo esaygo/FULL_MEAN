@@ -1,0 +1,36 @@
+<html>
+<body>
+  <head>
+    <title>Customize Teams</title>
+    <script src="angular.js"></script>
+    <script src="angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+  </head>
+  <body>
+    <div ng-controller="teamsController">
+        <form name="teamsForm">
+          First Name:
+          <input type='text' name='name' ng-model='newTeam.name' ng-minlength='3' placeholder="name">
+          <input type='submit' value="Add Team" ng-click='addTeam()'>
+        </form>
+        <table border=1>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="team in teams track by $index">
+              <td ng-bind="team.name"></td>
+              <td><button ng-click='deleteTeam(team)'>Delete Team</button></td>
+            </tr>
+          <tbody>
+        </table>
+        <div ng-messages="teamsForm.name.$error">
+          <p ng-message="minlength">The team's name is too short.</p>
+          <!-- <p ng-message="required">The player's name is required.</p> -->
+        </div>
+    </div> <!--end of customizeUsersController -->
+  </body>
+</html>
