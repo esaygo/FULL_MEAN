@@ -16,35 +16,38 @@
           // create the FriendFactory
           friends_app.factory('FriendFactory', function($http) {
             var factory = {};
-            var friends = [];
+            //var friends = [];
             //Restful syntax: index = get all that object
             factory.getFriends = function(callback) {
               //console.log("http get friends called");
-              $http.get('/friends').success(function(output) {
-                friends = output;
-                console.log("friends: " + friends);
+              $http.get('/friends').success(function(friends) {
+                //friends = output;
+                //console.log("friends: " + friends);
                 callback(friends);
               })
             }
 
-            factory.create = function(info, callback) {
+            factory.create = function(friend_info, callback) {
             //console.log("post data in factory", info);
             //friends.push({name: info.name, age: info.age});
-              $http.post('/addFriend', info).success(function(data){
-                //console.log("new friend", info);
-                callback(info);
-              })
-            }
-            factory.deleteFriend = function(friend, callback) {
-              console.log("http post delete friend");
-              //console.log("delete", friend);
-              $http.delete('deleteFriend/' + friend._id).success(function(){
-                friends.splice(friends.indexOf(friend), 1);
-                console.log("friend", friend);
-                //factory.getFriends(callback);
+              $http.post('/friends', friend_info).success(function(friends){
+                //console.log("friends", friends);
                 callback(friends);
               })
             }
+
+            factory.deleteFriend = function(friend, callback) {
+              //console.log("delete", friend);
+              $http.post('friends/' + friend._id).success(function(){
+                //friends.splice(friends.indexOf(friend), 1);
+                //console.log("friend", friend);
+                $http.get('/friends').success(function(data){
+                  //friends = data;
+                  callback(data);
+                });
+              });
+            }
+            //console.dir(factory);
             return factory;
           });
 
@@ -56,31 +59,37 @@
             });
 
           $scope.addfriend = function() {
-            console.log("add friend");
-            FriendFactory.create($scope.new_friend, function(info) {
+            FriendFactory.create($scope.new_friend, function(response) {
                 //console.log("scppe friend", $scope.friends);
                 //console.log("data from factory", post_data);
-                $scope.friends.push(info);
-
-                $scope.new_friend = {};
+                $scope.friends = response;
+                //console.log("response", response);
               });
+              $scope.new_friend = {};
             }
+
           $scope.deleteFriend = function(friend) {
-            //console.log("delete friend called");
-            //console.log("friendObj=", friend);
             FriendFactory.deleteFriend(friend, function(){
               FriendFactory.getFriends(function(data){
-                console.log("get friends called");
                 $scope.friends = data;
                 //console.log($scope.friends);
               });
-              //console.log(friend, "deleted");
+
             });
           }
       });
 
       </script>
 </head>
+<nav>
+    <div class="nav-wrapper">
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">Nav1</a></li>
+        <li><a href="#">Nav2</a></li>
+        <li><a href="#">Nav3</a></li>
+      </ul>
+    </div>
+  </nav>
   <body ng-controller="FriendsController">
   <div class="container">
       <h1>Friends</h1>
@@ -95,10 +104,12 @@
         <th>Action</th>
       <thead>
       <tbody>
+        {{friends}}
         <tr ng-repeat="friend in friends | filter: filter_name">
-        <td ng-bind="friend.name"></td>
-        <td ng-bind="friend.age"></td>
-        <td><button ng-click="deleteFriend(friend)">Delete</button></td>
+          <td ng-bind="friend.name"></td>
+          <td ng-bind="friend.age"></td>
+          <td><button ng-click="deleteFriend(friend)">Delete</button></td>
+        </tr>
       </tbody>
     </table>
   <div>

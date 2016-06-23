@@ -14,7 +14,7 @@ module.exports = (function(){
           res.json(err);
         } else {
           res.json(results);
-          console.log(results);
+          console.log("show", results);
           }
       })
     },
@@ -27,8 +27,8 @@ module.exports = (function(){
           res.json(err);
         } else {
           console.log("saved successfully to db");
-          res.json({success: true});
-          //res.redirect('/');
+          //res.json({success: true});
+          res.redirect('/friends');
         }
 
       });
@@ -42,9 +42,9 @@ module.exports = (function(){
           console.log("error deleting record");
           res.json(err);
         }else{
-          res.json({success: true});
+          //res.json({success: true});
           console.log("successfully deleted");
-          //res.redirect('/');
+          res.redirect('/');
         }
 
       });
