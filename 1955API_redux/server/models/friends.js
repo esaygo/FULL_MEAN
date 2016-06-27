@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 // var path = require('path');
 
 var FriendSchema = new mongoose.Schema({
-  name:{type: String},
+  name:{type: String, required: true, minlength: 4, maxlength: 100},
   created_at: {type: Date, default: Date.now}
 });
 

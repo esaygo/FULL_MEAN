@@ -1,0 +1,45 @@
+<html>
+<body>
+  <head>
+    <title>Customize Teams</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+    <script src="angular.js"></script>
+    <script src="angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <div ng-controller="FriendsController">
+
+    <button ng-click="logout()">Logout</button>
+    <div class="container">
+        <h1>1955 Dashboard</h1>
+        <hr>
+        <p>Add people who were born in 1955</p>
+        <!-- objects and properties nothing scary -->
+        <input type="text" ng-model="new_friend.name" placeholder="name">
+        <!-- addfriend() is a method we are going to make in the angular controller -->
+        <input type="submit" ng-click="addfriend()">
+    </div>
+    <div class="container">
+      <input type="text" ng-model="filter_name" placeholder="filter">
+        {{filter_name}}
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Action</th>
+        <thead>
+        <tbody>
+          {{friends}}
+          <tr ng-repeat="friend in friends | filter: filter_name">
+            <td ng-bind="friend.name"></td>
+            <td><button ng-click="deleteFriend(friend)">Delete</button> | <button ng-click="updateFriend(friend)">Update</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> <!-- end of controller-->
+  </body>
+</html>
