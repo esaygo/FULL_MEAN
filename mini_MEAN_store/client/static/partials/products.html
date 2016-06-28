@@ -4,31 +4,29 @@
     <title>Products</title>
   </head>
   <body>
-    <div ng-controller="productsController">
-    <div class="container">
-      <input type="text" ng-model="filter_name" placeholder="filter">
-        {{filter_name}}
-        <p>{{message}}</p>
-        <h1>Products</h1>
-        <hr>
-        <p>Add a new product</p>
-        <input type="text" ng-model="new_product.name" placeholder="name">
-        <input type="text" ng-model="new_product.image" placeholder="image(url)">
-        <input type="text" ng-model="new_product.desc" placeholder="description">
-        <input type="number" min="1" max="100" ng-model="new_product.quantity" placeholder="quantity">
-        <input type="submit" ng-click="create()">
-    </div>
-    <div class="container"
-    <div class="col s10">
-      <div class="row"
-          <div class="coll s2" ng-repeat="product in products | filter: filter_name">
-            <img src="{{product.image}}">
-            <p ng-bind="product.name"></p>
-            <p ng-bind="product.quantity"></p>
+    <div class="row section" ng-controller="productsController">
+        <input type="text" ng-model="filter_name" placeholder="search">
+          <!-- {{filter_name}} -->
+          <h1>Products</h1>
+          <hr>
+          <p ng-if="message">{{message}}</p>
+          <div class="col s3">
+            <p>Add a new product</p>
+            <input type="text" ng-model="new_product.name" placeholder="name">
+            <input type="text" ng-model="new_product.image" placeholder="image(url)">
+            <input type="text" ng-model="new_product.desc" placeholder="description">
+            <input type="number" min="1" max="100" ng-model="new_product.quantity" placeholder="quantity">
+            <input type="submit" ng-click="create()">
           </div>
+      <div class="col s9">
+            <div class="col s3" ng-repeat="product in products | filter: filter_name">
+              <div class="section"></div>
+              <img  class="responsive-img" width="150" height="150" src="{{product.image}}">
+              <p ng-bind="product.name"></p>
+              <p>{{product.quantity}}<span> (in stock)</span></p>
+            </div>
       </div>
-    </div>
-  </div>
+
   </div> <!-- end of controller-->
   </body>
 </html>

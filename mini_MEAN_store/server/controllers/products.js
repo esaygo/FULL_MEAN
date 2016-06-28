@@ -19,7 +19,8 @@ module.exports = {
       new_product.save(function(err) {
         if(err) {
           console.log("an error occured");
-          res.json(err);
+          res.json({status: false, message: err});
+          
         } else {
           console.log("saved successfully to db");
           //res.json({success: true});

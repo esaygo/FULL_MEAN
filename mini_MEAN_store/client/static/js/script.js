@@ -51,6 +51,7 @@ myAppModule.factory('productFactory', function ($http){
 
   var factory = {};
 
+
   factory.index = function(callback) {
     $http.get('/products').success(function(products) {
       console.log("products: " + products);
@@ -60,12 +61,7 @@ myAppModule.factory('productFactory', function ($http){
   factory.create = function(product_info, callback){
     $http.post('/products', product_info).success(function(products){
       console.log("in create factory, response", products);
-      callback(products);
-    })
-  }
-  factory.delete = function(productID, callback) {
-    $http.post('/products/'+ productID).success(function(products){
-      callback(products);
+        callback(products);
     })
   }
 
@@ -115,7 +111,7 @@ myAppModule.controller('productsController', function ($scope, productFactory, $
       console.log("in create factory, response", products);
       if(products.status === false){
         //console.log("the product already exists");
-        $scope.message = "the product already exists";
+        $scope.message = products.message;
       } else {
         $scope.products = products;
       }
@@ -123,10 +119,6 @@ myAppModule.controller('productsController', function ($scope, productFactory, $
     $scope.new_product = {};
     }
 
-  $scope.delete = function(productID) {
-    productFactory.delete(productID, function(products){
-        $scope.products = products;
-  })
-}
+
 
 });
