@@ -6,33 +6,29 @@
   <body>
     <div ng-controller="productsController">
     <div class="container">
-
+      <input type="text" ng-model="filter_name" placeholder="filter">
+        {{filter_name}}
+        <p>{{message}}</p>
         <h1>Products</h1>
         <hr>
         <p>Add a new product</p>
         <input type="text" ng-model="new_product.name" placeholder="name">
+        <input type="text" ng-model="new_product.image" placeholder="image(url)">
+        <input type="text" ng-model="new_product.desc" placeholder="description">
+        <input type="number" min="1" max="100" ng-model="new_product.quantity" placeholder="quantity">
         <input type="submit" ng-click="create()">
     </div>
-    <div class="container">
-      <input type="text" ng-model="filter_name" placeholder="filter">
-        {{filter_name}}
-        <p>{{message}}</p>
-      <table>
-        <thead>
-          <th>Customer Name</th>
-          <th>Created at</th>
-          <th>Action</th>
-        <thead>
-        <tbody>
-          {{friends}}
-          <tr ng-repeat="product in products | filter: filter_name">
-            <td ng-bind="product.name"></td>
-            <td ng-bind="product.created_at"></td>
-            <td><button ng-click="delete(product._id)">Delete</button> | <button ng-click="updateProduct(product)">Update</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="container"
+    <div class="col s10">
+      <div class="row"
+          <div class="coll s2" ng-repeat="product in products | filter: filter_name">
+            <img src="{{product.image}}">
+            <p ng-bind="product.name"></p>
+            <p ng-bind="product.quantity"></p>
+          </div>
+      </div>
     </div>
+  </div>
   </div> <!-- end of controller-->
   </body>
 </html>

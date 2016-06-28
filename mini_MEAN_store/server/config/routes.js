@@ -14,7 +14,13 @@ module.exports = function(app) {
   app.get('/products', products.index);
 
   app.post('/products', products.create);
-
-  app.post('/products/:id', products.delete);
+    //
+    // app.post('/products/:id', products.delete);
+    //
+    // app.get('/orders', orders.index);
+    //
+    // app.post('/orders', orders.create);
+    //
+    // app.post('/orders/:id', orders.delete);
 
 }
