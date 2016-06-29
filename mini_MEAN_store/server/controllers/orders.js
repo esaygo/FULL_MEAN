@@ -10,7 +10,7 @@ module.exports = {
           console.log(err);
           res.json(err);
         } else {
-          console.log("index orders", orders);
+          // console.log("index orders", orders);
           res.json(orders);
           //console.log("index", customers);
           }
@@ -27,7 +27,7 @@ module.exports = {
       if(err){
         res.json({status: false, message: "the order was not saved"});
       }else{
-            Customer.findOne({_id: req.body.customer}, function(err, customer){
+            Customer.findOne({_id: req.body._customer}, function(err, customer){
               if(err){
                 console.log(err);
               }else{
@@ -41,7 +41,7 @@ module.exports = {
                 }
               })
 
-            Product.findOne({_id: req.body.product}, function(err, product){
+            Product.findOne({_id: req.body._product}, function(err, product){
               console.log("product foud", product);
                 var updated_qty = product.quantity - new_order.quantity;
                 Product.findOneAndUpdate({_id: req.body.product}, {quantity: updated_qty}, function(err){
@@ -56,7 +56,7 @@ module.exports = {
           }
         })
 
-        module.exports.index(req.res);
+        // module.exports.index(req.res);
 
       }
 
