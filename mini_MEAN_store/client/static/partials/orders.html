@@ -1,25 +1,40 @@
 <html>
 <body>
   <head>
-    <title>Customize Associations</title>
-    <script src="angular.js"></script>
-    <script src="angular-route.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
-  </head>
+    <title>Orders</title>
   <body>
-    <div ng-controller="ordersController">
+    <div ng-controller="ordersController" class="row section">
+      <!-- {{customers}} -->
+      <!-- {{products}} -->
       <p><u>Add a new order</u></p>
-        <form name="associationsForm">
-          <select ng-options="customer.name for customer in customers" ng-model="selectedCustomer" ng-value="customer._id">
-            <!-- <option ng-repeat="player in players" value="{{player.name}}">{{player.name}}</option> -->
-          </select>
-          <input type="number" name="quantity" min="1" max="5">
-          <!-- <input type="hidden" name="player" ng-value="selectedPlayer"> -->
-          <select ng-options="order.name for order in orders" ng-model="selectedOrder" ng-value="order._id">
-            <!-- <option ng-repeat="team in teams" value="{{team.name}}">{{team.name}}</option> -->
-          </select>
-          <input type='submit' value="Order" ng-click='addAssociation()'>
-        </form>
+        <div class="input-field col s4">
+            <form name="orderForm">
+              <div class="input-field col s12">
+                <label>Customer</label>
+                <select ng-model="new_order.customer" class="browser-default" >
+                  <!-- <option value="" disabled selected>Choose a customer</option> -->
+                  <option ng-repeat="customer in customers" value="{{customer._id}}" ng-bind="customer.name"></option>
+                </select>
+              </div>
+              <div class="input-field col s12">
+                <label>Quantity</label>
+                <input type="number" ng-model="new_order.quantity" name="quantity" min="1">
+                <!-- <input type="hidden" name="player" ng-value="selectedPlayer"> -->
+              </div>
+              <div class="input-field col s12">
+                <label>Product</label>
+                <select ng-model="new_order.product" class="browser-default">
+                  <!-- <option value="" disabled selected>Choose a product</option> -->
+                  <option ng-repeat="product in products" value="{{product._id}}" ng-bind="product.name"></option>
+                </select>
+              </div>
+              <div class="input-field col s12">
+                <input type='submit' value="Order" ng-click='create()'>
+              </div>
+            </form>
+        </div>
+
+        <input type="text" ng-model="customer_filter" placeholder="search by customer">
         <table border=1>
           <thead>
             <tr>
@@ -30,13 +45,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="assoc in associations track by $index">
-              <td ng-bind="assoc.customer"></td>
-              <!-- <td ng-bind="assoc.product"></td> -->
-              <!-- <td><button ng-click='deleteAssociation(assoc)'>Delete Assoc</button></td> -->
+            <tr ng-repeat="order in orders | filter: customer_filter | orderBy: created_at">
+              <td ng-bind="order._customer.name"></td>
+              <td ng-bind="order._product.name"></td>
+              <td ng-bind="order.quantity"></td>
+              <td ng-bind="order.created_at | date : format : timezone"></td>
             </tr>
           <tbody>
         </table>
     </div> <!--end of Controller -->
+
   </body>
 </html>

@@ -52,39 +52,5 @@ module.exports = {
       });
   }
 
-  //  create_comment: function(req, res) {
-  //    //console.log("post comment data", req.body, req.params.id);
-  //    Message.findOne({_id: req.params.id}, function(err, message) {
-  //      var comment = new Comment(req.body);
-  //      comment._message = req.params.id;
-  //      comment.save(function(err) {
-  //        message.comments.push(comment);
-  //      message.save(function(err) {
-  //        if(err) {
-  //          console.log("Error");
-  //        } else {
-  //          console.log("comment was saved");
-  //          res.redirect('/');
-  //        }
-  //      });
-  //      });
-  //    });
-  //   },
-  //
-  // show: function(req, res) {
-  //       Message.find({})
-  //       .populate('comments')
-  //       .exec(function(err, messages) {
-  //
-  //         if(err) {
-  //           console.log("error in find: ", err);
-  //           res.render('index', {message: "there was an error"});
-  //         } else {
-  //           console.log("messages", messages);
-  //           res.render('index', {messages: messages});
-  //         }
-  //       });
-  // }
-
-
+  
 }

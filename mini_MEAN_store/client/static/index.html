@@ -1,6 +1,6 @@
 <html ng-app='myApp'>
     <head>
-      <title>Customers and Orders</title>
+      <title>Mini MEAN Store</title>
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
       <script src="../js/angular.js"></script>
@@ -9,6 +9,9 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
       <script src="../js/script.js" type='text/javascript'></script>
+      <script src="../js/customers.js" type='text/javascript'></script>
+      <script src="../js/products.js" type='text/javascript'></script>
+      <script src="../js/orders.js" type='text/javascript'></script>
     </head>
     <body>
   <nav>
@@ -24,5 +27,6 @@
   <button ng-click="logout()">Logout</button>
     <div ng-view=''>
     </div>
+
 </body>
 </html>

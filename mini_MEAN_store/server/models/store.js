@@ -13,7 +13,7 @@ var ProductSchema = new mongoose.Schema({
 
 var OrderSchema = new mongoose.Schema({
   _customer: {type: Schema.Types.ObjectId, ref: 'Customer'},
-  // products: [{type: Schema.Types.ObjectID, ref: 'Product'}],
+  _product: {type: Schema.Types.ObjectId, ref: 'Product'},
   quantity: {type: Number, required: true},
   created_at: {type: Date, default: Date.now}
 });
@@ -25,9 +25,8 @@ var CustomerSchema = new mongoose.Schema({
 });
 
 
-
-mongoose.model('Customer', CustomerSchema);
 mongoose.model('Product', ProductSchema);
+mongoose.model('Customer', CustomerSchema);
 mongoose.model('Order', OrderSchema);
 
 //CustomerSchema.path('name').required(true, 'Name cannot be blank');

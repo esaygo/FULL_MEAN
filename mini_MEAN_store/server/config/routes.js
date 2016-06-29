@@ -15,10 +15,10 @@ module.exports = function(app) {
 
   app.post('/products', products.create);
 
-    // app.get('/orders', orders.index);
-    //
-    // app.post('/orders', orders.create);
-    //
-    // app.post('/orders/:id', orders.delete);
+  // app.post('products/:id/update', products.update);
+
+  app.get('/orders', orders.index);
+
+  app.post('/orders', orders.create);
 
 }
