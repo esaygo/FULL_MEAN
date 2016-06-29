@@ -27,7 +27,7 @@
           {{friends}}
           <tr ng-repeat="customer in customers | filter: filter_name">
             <td ng-bind="customer.name"></td>
-            <td ng-bind="customer.created_at"></td>
+            <td ng-bind="customer.created_at | date : format : timezone"></td>
             <td><button ng-click="delete(customer._id)">Delete</button> | <button ng-click="updateCustomer(customer)">Update</button></td>
           </tr>
         </tbody>

@@ -11,7 +11,7 @@
             <form name="orderForm">
               <div class="input-field col s12">
                 <label>Customer</label>
-                <select ng-model="new_order.customer" class="browser-default" >
+                <select ng-model="new_order._customer" class="browser-default" >
                   <!-- <option value="" disabled selected>Choose a customer</option> -->
                   <option ng-repeat="customer in customers" value="{{customer._id}}" ng-bind="customer.name"></option>
                 </select>
@@ -23,7 +23,7 @@
               </div>
               <div class="input-field col s12">
                 <label>Product</label>
-                <select ng-model="new_order.product" class="browser-default">
+                <select ng-model="new_order._product" class="browser-default">
                   <!-- <option value="" disabled selected>Choose a product</option> -->
                   <option ng-repeat="product in products" value="{{product._id}}" ng-bind="product.name"></option>
                 </select>
