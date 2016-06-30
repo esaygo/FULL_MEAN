@@ -16,7 +16,7 @@
     <div class="container">
       <input type="text" ng-model="filter_name" placeholder="filter">
         {{filter_name}}
-        <p>{{message}}</p>
+      <p ng-if="message">{{message}}</p>
       <table>
         <thead>
           <th>Customer Name</th>

@@ -9,10 +9,13 @@ myAppModule.factory('orderFactory', function ($http){
       })
     }
   factory.create = function(order_info, callback){
-    console.log("in create factory, order_info", order_info);
-    $http.post('/orders', order_info).success(function(orders){
+
+    $http.post('/orders', order_info).success(function(){
+      console.log("in create factory, order_info", order_info);
+      $http.get('/orders').success(function(orders){
       //console.log("in create factory, response", orders);
-        callback();
+        callback(orders);
+      })
     })
   }
 
@@ -37,9 +40,13 @@ myAppModule.controller('ordersController', function ($scope,  orderFactory, cust
 
   $scope.create = function() {
     orderFactory.create($scope.new_order, function(orders){
-        console.log("in create order controller, response", orders.product);
-
-        $scope.orders = orders;
+        console.log("in create order controller, response", orders);
+        if(orders.status === false){
+          console.log("the product is out of stock");
+          $scope.message = orders.message;
+        } else {
+            $scope.orders = orders;
+        }
 
       // productFactory.update(orders.product, orders.quantity, function(){
       //     console.log("in update prod, order create", orders.product);
@@ -48,7 +55,7 @@ myAppModule.controller('ordersController', function ($scope,  orderFactory, cust
       //     })
       // })
     });
-    $scope.new_order = {};
+          $scope.new_order = {};
     }
 
 });

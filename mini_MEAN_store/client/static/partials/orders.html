@@ -4,8 +4,7 @@
     <title>Orders</title>
   <body>
     <div ng-controller="ordersController" class="row section">
-      <!-- {{customers}} -->
-      <!-- {{products}} -->
+      <p ng-if="message">{{message}}</p>
       <p><u>Add a new order</u></p>
         <div class="input-field col s4">
             <form name="orderForm">
@@ -45,7 +44,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="order in orders | filter: customer_filter | orderBy: created_at">
+            <tr ng-repeat="order in orders | filter: customer_filter | orderBy: reverse: 'created_at'">
               <td ng-bind="order._customer.name"></td>
               <td ng-bind="order._product.name"></td>
               <td ng-bind="order.quantity"></td>

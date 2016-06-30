@@ -8,11 +8,10 @@ module.exports = {
       Order.find({}).populate('_customer _product').exec(function(err, orders) {
         if(err) {
           console.log(err);
-          res.json(err);
+          res.json({status: false, message: "the order was not found"});
         } else {
           // console.log("index orders", orders);
           res.json(orders);
-          //console.log("index", customers);
           }
       });
     },
@@ -27,32 +26,50 @@ module.exports = {
       if(err){
         res.json({status: false, message: "the order was not saved"});
       }else{
-            Customer.findOne({_id: req.body._customer}, function(err, customer){
-              if(err){
-                console.log(err);
-              }else{
-                  console.log("customer foud", customer);
-                  customer.orders.push(new_order._id);
-                  customer.save(function(err){
-                    if(err) {res.json(err);
-                    }else {res.json({status: true});
-                      }
-                  })
-                }
-              })
+            // Customer.findOne({_id: req.body._customer}, function(err, customer){
+            //   if(err){
+            //     console.log(err);
+            //   }else{
+            //       console.log("customer foud", customer);
+            //       customer.orders.push(new_order._id);
+            //       customer.save(function(err){
+            //         if(err) {res.json(err);
+            //         }else {res.json({status: true});
+            //           }
+            //       })
+            //     }
+            //   })
 
             Product.findOne({_id: req.body._product}, function(err, product){
-              console.log("product foud", product);
+              console.log("product found", product);
                 var updated_qty = product.quantity - new_order.quantity;
-                Product.findOneAndUpdate({_id: req.body.product}, {quantity: updated_qty}, function(err){
-                  if(err){
-                    console.log("quantity did not update");
-                  } else {
-                    console.log("product quantity updated successfully");
-                  }
-                })
-
+                if(updated_qty >= 0) {
+                    Product.findByIdAndUpdate({_id: req.body._product}, {$set: {quantity: updated_qty}}, function(err, product){
+                      if(err){
+                        console.log("quantity did not update");
+                      } else {
+                        console.log("product quantity updated successfully", product);
+                        // res.redirect('/orders');
+                      }
+                    })
+                    Customer.findOne({_id: req.body._customer}, function(err, customer){
+                      if(err){
+                        console.log(err);
+                      }else{
+                          console.log("customer foud", customer);
+                          customer.orders.push(new_order._id);
+                          customer.save(function(err){
+                            if(err) {res.json(err);
+                            }else {res.json({status: true});
+                              }
+                          })
+                        }
+                      })  
+                }else{
+                  res.json({status: false, message: "Out of stock"});
+                }
             })
+
           }
         })
 

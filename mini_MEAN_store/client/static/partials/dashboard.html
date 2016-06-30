@@ -9,6 +9,7 @@
       <input type="text" name="name" value="" ng-model="product_filter">
       <button type="button" name="button">Filter</button>
     </div>
+    <p ng-if="message">{{message}}</p>
     <div class="col s9">
       <div div class="col s3" ng-repeat="product in products | limitTo:3  | filter:product_filter">
         <img src="{{product.image}}" alt="{{product.name}}" width="100" height="100" />
